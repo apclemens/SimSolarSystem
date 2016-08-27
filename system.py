@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 
+# This is the main numerical simulation of the solar system.
+# It uses the classical Runge-Kutta method to approximate
+# cartesian coordinates of solar system objects over time.
+
 import math
 from progressbar import ProgressBar
 
