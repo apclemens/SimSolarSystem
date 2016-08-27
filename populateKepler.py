@@ -1,3 +1,8 @@
+#!usr/bin/env python
+
+# this downloads the orbital data of planets, moons, and asteroids
+# from the Jet Propulsion Laboratory db, and saves them to a file
+
 import urllib2
 
 def getAsteroidParam(html, paramName):
