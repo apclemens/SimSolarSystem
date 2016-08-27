@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+
+# this takes the orbital information downloaded by populateKepler.py
+# and converts the orbital mechanics data to cartesian coordinates
+# with respect to the sun.
+
 import math
 
 masses = {'none':0}
