@@ -1,3 +1,8 @@
+#!/usr/bin/env python
+
+# this takes data created by system.py and draws it into frames, which then
+# gets turned into a gif
+
 from os import listdir
 from os.path import isfile, join
 from progressbar import ProgressBar
