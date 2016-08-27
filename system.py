@@ -4,6 +4,8 @@
 # It uses the classical Runge-Kutta method to approximate
 # cartesian coordinates of solar system objects over time.
 
+# modified from https://www.thanassis.space/gravityRK4.html
+
 import math
 from progressbar import ProgressBar
 
@@ -13,9 +15,8 @@ GRAVCONSTANT = 1.993e-44
 
 g_listOfObjects = []
 
-class State:
+class StateVector:
 	
-  """Class representing position and velocity."""
   def __init__(self, x, y, z, vx, vy, vz):
     self._x, self._y, self._z, self._vx, self._vy, self._vz = x, y, z, vx, vy, vz
 
@@ -25,7 +26,6 @@ class State:
 
 class Derivative:
 	
-  """Class representing velocity and acceleration."""
   def __init__(self, dx, dy, dz, dvx, dvy, dvz):
     self._dx, self._dy, self._dz, self._dvx, self._dvy, self._dvz = dx, dy, dz, dvx, dvy, dvz
 
@@ -46,55 +46,51 @@ class ObjectInSpace:
   def __repr__(self):
     return repr(self._st)
 
-  def acceleration(self, state):
-    """Calculate acceleration caused by other planets on this one."""
+  def accelerate(self, state):
     ax = 0.0
     ay = 0.0
     az = 0.0
     for p in g_listOfObjects:
       if p is self:
-        continue  # ignore ourselves
+        continue
       dx = p._st._x - state._x
       dy = p._st._y - state._y
       dz = p._st._z - state._z
-      dsq = dx*dx + dy*dy + dz*dz # distance squared
-      dr = math.sqrt(dsq)  # distance
+      dsq = dx*dx + dy*dy + dz*dz
+      dr = math.sqrt(dsq)
       force = GRAVCONSTANT*p._m/dsq
-      # Accumulate acceleration...
       ax += force*dx/dr
       ay += force*dy/dr
       az += force*dz/dr
     return (ax, ay, az)
 
   def initialDerivative(self, state):
-    """Part of Runge-Kutta method."""
-    ax, ay, az = self.acceleration(state)
+    ax, ay, az = self.accelerate(state)
     return Derivative(state._vx, state._vy, state._vz, ax, ay, az)
 
   def nextDerivative(self, initialState, derivative, dt):
-    """Part of Runge-Kutta method."""
-    state = State(0., 0., 0., 0., 0., 0.)
+    state = StateVector(0., 0., 0., 0., 0., 0.)
     state._x = initialState._x + derivative._dx*dt
     state._y = initialState._y + derivative._dy*dt
     state._z = initialState._z + derivative._dz*dt
     state._vx = initialState._vx + derivative._dvx*dt
     state._vy = initialState._vy + derivative._dvy*dt
     state._vz = initialState._vz + derivative._dvz*dt
-    ax, ay, az = self.acceleration(state)
+    ax, ay, az = self.accelerate(state)
     return Derivative(state._vx, state._vy, state._vz, ax, ay, az)
 
   def updatePlanet(self, dt):
     self._history.append(repr(self._st))
     k1 = self.initialDerivative(self._st)
-    k2 = self.nextDerivative(self._st, a, dt*0.5)
-    k3 = self.nextDerivative(self._st, b, dt*0.5)
-    k4 = self.nextDerivative(self._st, c, dt)
-    dxdt = 1.0/6.0 * (k1._dx + 2.0*(k2._dx + k3._dx) + k4._dx)
-    dydt = 1.0/6.0 * (k1._dy + 2.0*(k2._dy + k3._dy) + k4._dy)
-    dzdt = 1.0/6.0 * (k1._dz + 2.0*(k2._dz + k3._dz) + k4._dz)
-    dvxdt = 1.0/6.0 * (k1._dvx + 2.0*(k2._dvx + k3._dvx) + k4._dvx)
-    dvydt = 1.0/6.0 * (k1._dvy + 2.0*(k2._dvy + k3._dvy) + k4._dvy)
-    dvzdt = 1.0/6.0 * (k1._dvz + 2.0*(k2._dvz + k3._dvz) + k4._dvz)
+    k2 = self.nextDerivative(self._st, k1, dt*.5)
+    k3 = self.nextDerivative(self._st, k2, dt*.5)
+    k4 = self.nextDerivative(self._st, k3, dt)
+    dxdt = 1./6. * (k1._dx + 2.*(k2._dx + k3._dx) + k4._dx)
+    dydt = 1./6. * (k1._dy + 2.*(k2._dy + k3._dy) + k4._dy)
+    dzdt = 1./6. * (k1._dz + 2.*(k2._dz + k3._dz) + k4._dz)
+    dvxdt = 1./6. * (k1._dvx + 2.*(k2._dvx + k3._dvx) + k4._dvx)
+    dvydt = 1./6. * (k1._dvy + 2.*(k2._dvy + k3._dvy) + k4._dvy)
+    dvzdt = 1./6. * (k1._dvz + 2.*(k2._dvz + k3._dvz) + k4._dvz)
     self._st._x += dxdt*dt
     self._st._y += dydt*dt
     self._st._z += dzdt*dt
