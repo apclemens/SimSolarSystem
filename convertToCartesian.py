@@ -29,7 +29,7 @@ class ObjectInSpace:
         self.omega = eval(splitInfo[6])*math.pi/180 # longitude of ascending node
         self.i = eval(splitInfo[7])*math.pi/180     # inclination
         self.M = eval(splitInfo[8])*math.pi/180     # mean anomaly
-        self.mu = masses[self.relativeTo] * 1.993e-44 # using mass of sun right now
+        self.mu = masses[self.relativeTo] * 1.993e-44
 
     def __repr__(self):
         try:
@@ -65,6 +65,9 @@ class ObjectInSpace:
                          orbFrameVel[0]*(math.sin(self.w)*math.sin(self.i)) + orbFrameVel[1]*(math.cos(self.w)*math.sin(self.i))]
 
     def correctCartesian(self, against):
+        # we calculated the cartesian coordinates with respect to
+        # the object it is orbiting.  We must add the coordinates for that
+        # to get it with respect to the sun.
         for i in range(3):
             self.position[i] += against.position[i]
             self.velocity[i] += against.velocity[i]
