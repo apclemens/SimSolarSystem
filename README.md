@@ -8,3 +8,5 @@ Should be run in this order:
   convertToCartesian.py
   system.py
   draw.py
+
+Results where delta t = 1 min: http://imgur.com/a/Deei7
