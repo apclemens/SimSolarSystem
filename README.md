@@ -9,5 +9,5 @@ Should be run in this order:
   system.py
   draw.py
 
-Results where delta t = 1 day: http://imgur.com/a/5lHyT.gif
-Results where delta t = 1 min: http://imgur.com/a/Deei7.gif
+Results where delta t = 1 day: http://i.imgur.com/2kFZ1yx.gif
+Results where delta t = 1 min: http://i.imgur.com/vU0uHtA.gif
