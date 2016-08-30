@@ -12,7 +12,7 @@ Should be run in this order:
 Results for different values of delta t:
 
 | delta t | Result (inner) | Result (outer) |
-| :------------- | :--------- | | :--------- |
+| :------------- | :--------- | :--------- |
 | 1 minute | http://i.imgur.com/gUAJfMi.gif |  |
 | 5 minutes | http://i.imgur.com/cXYWHdQ.gif |  |
 | 15 minutes | http://i.imgur.com/XirxJQk.gif | http://i.imgur.com/XLRz0OB.gif |
