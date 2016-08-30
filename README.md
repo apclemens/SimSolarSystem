@@ -14,7 +14,7 @@ Results for different values of delta t:
 | delta t | Result (inner) | Result (outer) |
 | :------------- | :--------- | :--------- |
 | 1 minute | http://i.imgur.com/gUAJfMi.gif |  |
-| 5 minutes | http://i.imgur.com/cXYWHdQ.gif |  |
+| 5 minutes | http://i.imgur.com/cXYWHdQ.gif | http://i.imgur.com/VEwUoxI.gif |
 | 15 minutes | http://i.imgur.com/XirxJQk.gif | http://i.imgur.com/XLRz0OB.gif |
 | 30 minutes | http://i.imgur.com/PRG3U8c.gif | http://i.imgur.com/eqyIN3s.gif |
 | 1 hour | http://i.imgur.com/BIu4ZqL.gif | http://i.imgur.com/jY27FA3.gif |
