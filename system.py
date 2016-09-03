@@ -6,9 +6,9 @@
 
 # modified from https://www.thanassis.space/gravityRK4.html
 
-import math
+import math,subprocess
 from progressbar import ProgressBar
-
+import draw
 import os,pickle
 
 GRAVCONSTANT = 1.993e-44
@@ -38,7 +38,7 @@ class ObjectInSpace:
   def __init__(self, info):
     infoSplit = info.split('\n')
     self._n = infoSplit[0]
-    self._st = State(eval(infoSplit[2]), eval(infoSplit[3]), eval(infoSplit[4]),
+    self._st = StateVector(eval(infoSplit[2]), eval(infoSplit[3]), eval(infoSplit[4]),
              eval(infoSplit[5]), eval(infoSplit[6]), eval(infoSplit[7]))
     self._m = eval(infoSplit[1])
     self._history = []
@@ -98,7 +98,7 @@ class ObjectInSpace:
     self._st._vy += dvydt*dt
     self._st._vz += dvzdt*dt
 
-def main(n=1):
+def main(n=1, dtDisp = '1 day'):
 
   global g_listOfObjects
 
@@ -118,6 +118,10 @@ def main(n=1):
   for i in pbar(range(int(365./n))):
     for p in g_listOfObjects:
       p.updatePlanet(dt)
+    draw.drawFrame(g_listOfObjects,str(dt),i)
+  
+  subprocess.check_output(('convert images/*.png gifs/'+dtDisp+'.gif').split(' '))
+
   
   #write planet histories
   for planet in g_listOfObjects:

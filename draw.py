@@ -9,6 +9,22 @@ from progressbar import ProgressBar
 import pickle,subprocess
 from PIL import Image, ImageDraw, ImageFont
 
+def drawFrame(planets, deltat, i):
+	
+	toWrite = 'dt = '+deltat
+	fnt = ImageFont.truetype('Pillow/Tests/fonts/FreeMono.ttf', 40)
+	
+	im = Image.new('RGBA', (1280, 720), (0,255,0,0))
+	draw = ImageDraw.Draw(im)
+	draw.rectangle([(0,0),im.size], fill = (0,0,0))
+	draw.text((10,10), toWrite, font=fnt, fill = (255,255,255))
+	rad = 1
+	for plan in planets:
+		x = plan._st._x*80 + im.size[0]/2
+		y = plan._st._y*80 + im.size[1]/2
+		draw.ellipse((x-rad,y-rad,x+rad,y+rad), fill=(255,255,255))
+	im.save('images/'+'%05d'%i+'.png')
+
 def main(n=1, deltat=""):
 	
 	toWrite = 'dt = '+deltat
@@ -37,8 +53,8 @@ def main(n=1, deltat=""):
 		draw.rectangle([(0,0),im.size], fill = (0,0,0) )
 		draw.text((10,10), toWrite, font=fnt, fill=(255,255,255))
 		for plan in histories:
-			x = eval(plan[i].split(' ')[0].split(':')[1])*20+im.size[0]/2
-			y = eval(plan[i].split(' ')[1].split(':')[1])*20+im.size[1]/2
+			x = eval(plan[i].split(' ')[0].split(':')[1])*80+im.size[0]/2
+			y = eval(plan[i].split(' ')[1].split(':')[1])*80+im.size[1]/2
 			draw.ellipse((x-rad,y-rad,x+rad,y+rad), fill=(255,255,255))
 		im.save('images/'+'%05d' % i +'.png')
 	
