@@ -4,10 +4,10 @@ Runge-Kutta numerical simulation of our Solar System.
 Currently includes the Sun, planets (and Pluto), moons, and 20 objects in the asteroid belt.
 
 Should be run in this order:
- * populateKepler.py
- * convertToCartesian.py
- * system.py
- * draw.py
+ * populateKepler.py (downloads Keplerian coordinates of objects from Jet Propulsion Laboratory's website)
+ * convertToCartesian.py (converts the coordinates from Keplerian to Cartesian)
+ * system.py (runs the simulation)
+ * draw.py (draws images and creates a video)
 
 Results for different values of delta t:
 
