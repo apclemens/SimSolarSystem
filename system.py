@@ -115,12 +115,15 @@ def main(n=1, dtDisp = '1 day'):
 
   pbar = ProgressBar()
   
-  for i in pbar(range(int(365./n))):
-    for p in g_listOfObjects:
-      p.updatePlanet(dt)
-    draw.drawFrame(g_listOfObjects,str(dt),i)
-  
-  subprocess.check_output(('convert images/*.png gifs/'+dtDisp+'.gif').split(' '))
+  try:
+    for i in pbar(range(int(365./n))):
+      for p in g_listOfObjects:
+        p.updatePlanet(dt)
+      draw.drawFrame(g_listOfObjects,str(dt),i)
+
+    subprocess.check_output(('convert images/*.png gifs/'+dtDisp+'.gif').split(' '))
+  except:
+    pass
 
   
   #write planet histories
