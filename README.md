@@ -4,12 +4,12 @@ Runge-Kutta numerical simulation of our Solar System.
 Currently includes the Sun, planets (and Pluto), moons, and 20 objects in the asteroid belt.
 
 Should be run in this order:
- * populateKepler.py (downloads Keplerian coordinates of objects from Jet Propulsion Laboratory's website)
+ * populateKepler.py (scrapes Keplerian coordinates of objects from Jet Propulsion Laboratory's website)
  * convertToCartesian.py (converts the coordinates from Keplerian to Cartesian)
  * system.py (runs the simulation)
  * draw.py (draws images and creates a video)
 
-Results for different values of delta t:
+Here are the results for different values of delta t.  You can see that when delta t is high, the simulation is not very precise and the moons start flying everywhere.  It takes a very small value of delta t for the moons to have a stable orbit around the planets.
 
 | delta t | Result (inner) | Result (outer) |
 | :------------- | :--------- | :--------- |
